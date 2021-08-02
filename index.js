@@ -44,11 +44,11 @@ client.on('message', (message) => {
       if (!message.guild) return;
       if (!message.member.voice.channel) return message.channel.send(`:x: You aren't connected to a voice channel in this server`);
       
-      const user = message.member.voice.channel;
-      const me = message.guild.me.voice.channel;
+      const author = message.member.voice.channel;
+      const I = message.guild.me.voice.channel;
       
-      if (!me) return message.channel.send(`:x: | I'm not connected to a voice channel in this server. Try to connect me with run \`${configs.prefix}join\``);
-      if (me.id !== user.id) return message.channel.send(`:x: | You'r not connected to same channel than me.`);
+      if (!I) return message.channel.send(`:x: | I'm not connected to a voice channel in this server. Try to connect me with run \`${configs.prefix}join\``);
+      if (I.id !== author.id) return message.channel.send(`:x: | You'r not connected to same channel than me.`);
       
       let member = message.mentions.users.first() || message.guild.members.cache.get(args[0]) || 'NO_MEMBER';
       if (member === 'NO_MEMBER') return message.channel.send(`:x: | Invalid member. Use a mention or an id`);
@@ -56,7 +56,7 @@ client.on('message', (message) => {
       if (!member.voice.channel) return message.channel.send(`:x: | ${member.tag} isn't connected`);
       const channel = member.voice.channel;
       
-      if (channel.id !== me.id) return message.channel.send(`:x: | ${member.tag} isn't connected at same channel than us`);
+      if (channel.id !== I.id) return message.channel.send(`:x: | ${member.tag} isn't connected at same channel than us`);
       let kicked = true;
       
       member.voice.kick().catch((error) => {
